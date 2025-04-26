@@ -9,6 +9,7 @@ public class CircularLinkedList<T> {
         Node<T> next;
 
         Node(T data) {
+
             this.data = data;
         }
     }

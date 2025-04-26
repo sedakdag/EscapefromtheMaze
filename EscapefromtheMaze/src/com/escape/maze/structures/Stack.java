@@ -1,11 +1,9 @@
 package com.escape.maze.structures;
 
-/*<T> aslında "Type Parameter" demektir. Yani bu bir placeholder (yer tutucu) – sen o sınıfı tanımlarken
- *  ne tür veriyle çalışacağını söylemeden önce bir esneklik sağlar. Genellikle veri yapılarıyla birlikte kullanılır. */ 
-/* Generic bir yapıdır */ 
+
 
 public class Stack<T> {
-	
+
     private Node<T> top;
     private int size;
 
@@ -23,10 +21,9 @@ public class Stack<T> {
         top = node;
         size++;
     }
-
     public T pop() {
-        if (isEmpty()) {
-        	return null;
+        if (top==null) {
+            return null;
         }
         T data = top.data;
         top = top.next;
@@ -34,15 +31,21 @@ public class Stack<T> {
         return data;
     }
 
+
+
     public T peek() {
-        return isEmpty() ? null : top.data;
+        if (top == null) return null;
+        return top.data;
     }
 
+    // boş mu
     public boolean isEmpty() {
         return top == null;
     }
 
+    // eleman sayısı
     public int size() {
         return size;
     }
 }
+
