@@ -1,27 +1,29 @@
 package com.escape.maze.structures;
 
 public class SinglyLinkedList<T> {
-    private Node<T> head;
-    private int size;
+
 
     private static class Node<T> {
         T data;
         Node<T> next;
 
         Node(T data) {
+
             this.data = data;
         }
     }
+    private Node<T> head;
+    private int size;
 
     public void add(T data) {
-        Node<T> node = new Node<>(data);
+        Node<T> newNode = new Node<>(data);
         if (head == null) {
-            head = node;
+            head = newNode;
         } else {
             Node<T> current = head;
             while (current.next != null)
                 current = current.next;
-            current.next = node;
+            current.next = newNode;
         }
         size++;
     }
