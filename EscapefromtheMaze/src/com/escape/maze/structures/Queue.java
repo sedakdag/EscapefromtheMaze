@@ -12,7 +12,8 @@ public class Queue<T> {
             this.data = data;
         }
     }
-    // kuyruğun sonuna ekleme
+    
+    //Add to the end of the queue
     public void enqueue(T data) {
         Node<T> newNode = new Node<>(data);
         if (isEmpty()) {
@@ -23,7 +24,8 @@ public class Queue<T> {
         }
         size++;
     }
-    // kuyruğun başındaki elemanı çıkarıp dönme
+    
+    //Remove and return the front element of the queue
     public T dequeue() {
         if (isEmpty()) {
             return null;
@@ -37,16 +39,38 @@ public class Queue<T> {
         size--;
         return data;
     }
-    // kuyruğun başındaki elemanı gösterme
+    
+    //Check if the queue contains a specific element
+    public boolean contains(T data) {
+        Node<T> current = front;
+        while (current != null) {
+            if (current.data.equals(data)) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+    
+    //Return the front element without removing it
     public T peek() {
         return front != null ? front.data : null;
     }
-    //başa dönme
+    
+    //Check if the queue is empty
     public boolean isEmpty() {
         return front == null;
     }
-    //toplam eleman sayısı
+    
+    //Return the total number of elements
     public int size() {
         return size;
+    }
+    
+    //Remove all elements from the queue
+    public void clear() {
+        front = null;
+        rear = null;
+        size = 0;
     }
 }

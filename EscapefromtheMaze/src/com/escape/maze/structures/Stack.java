@@ -21,6 +21,7 @@ public class Stack<T> {
         top = node;
         size++;
     }
+    
     public T pop() {
         if (top==null) {
             return null;
@@ -31,19 +32,17 @@ public class Stack<T> {
         return data;
     }
 
-
-
     public T peek() {
         if (top == null) return null;
         return top.data;
     }
 
-    // boş mu
+    //Check if the stack is empty
     public boolean isEmpty() {
         return top == null;
     }
 
-    // eleman sayısı
+    //Return the number of elements
     public int size() {
         return size;
     }
