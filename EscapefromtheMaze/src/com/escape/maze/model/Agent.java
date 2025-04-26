@@ -1,5 +1,8 @@
 package com.escape.maze.model;
 
+import com.escape.maze.structures.Stack;
+import com.escape.maze.manager.MazeManager;
+
 public class Agent {
     private int id;
     private int currentX, currentY;
@@ -61,5 +64,31 @@ public class Agent {
 
     public String getMoveHistoryAsString() {
         return moveHistory.toString();
+    }
+
+    public int getCurrentX() {
+        return currentX;
+    }
+    public int getCurrentY() {
+        return currentY;
+    }
+    public int getTotalMoves() {
+        return totalMoves;
+    }
+    public int getBacktracks() {
+        return backtracks;
+    }
+    public int getId() {
+        return id;
+    }
+    public boolean isHasPowerUp(){
+        return hasPowerUp;
+    }
+    public boolean isHasReachedGoal() {
+        return hasReachedGoal;
+    }
+
+    public Stack<String> getMoveHistory() {
+        return moveHistory;
     }
 }
