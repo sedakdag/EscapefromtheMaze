@@ -38,13 +38,20 @@ public class TurnManager {
     }
     //ID,pozisyon,toplam move, power up kullanımı, backtrackler ve son 5 poizyon özeti
     public void logTurnSummary(Agent agent) {
-        System.out.println("\n>>>>>>>>> TURN " + currentRound + " <<<<<<<<<\n");
+        System.out.println("Turn:" + currentRound);
 
         System.out.println("ID of the Agent:" + agent.getId());
         System.out.println("Current Position:(" + agent.getCurrentX() + ", " + agent.getCurrentY() + ")");
         System.out.println("Total Moves: " + agent.getTotalMoves());
         System.out.println("Power Up Active: " + agent.isHasPowerUp());
+       //linelara bir kere daha bak, eksik ya da hatalı kod olabilir.
+        if (agent.isHasPowerUp()) {
+            System.out.println("Agent " + agent.getId() + " used a Power Up");
+        }
         System.out.println("Backtracks: " + agent.getBacktracks());
+        if (agent.getBacktracks() > 0) {
+            System.out.println("Agent " + agent.getId() + " backtracked " + agent.getBacktracks() + " times");
+        }
 
         System.out.println("Positions of The Last 5 Moves:");
         Stack<String> temp = new Stack<>(); //temporoary stack oluşturdum
@@ -56,7 +63,7 @@ public class TurnManager {
             temp.push(move); //temporary kaydettim ki string de silinmesin
             count++;
         }
-// move ihstoryden bilgileri aldığım için boşaldı, geri doldurmam gerek
+// move historyden bilgileri aldığım için boşaldı, geri doldurmam gerek
         while (!temp.isEmpty()) {
             agent.getMoveHistory().push(temp.pop());
         }
