@@ -11,6 +11,7 @@ import java.util.Random;
 public class MazeManager {
 	private MazeTile[][] grid;
 	private int width, height;
+	private int startX, startY;
 	private SinglyLinkedList<Agent> agentList;
 	private CircularLinkedList<Integer> rotatingRows;
 	
@@ -50,8 +51,12 @@ public class MazeManager {
 			int goalY = random.nextInt(height);
 			grid[goalX][goalY].setType('G');
 			
+			//Random start point
+			startX = random.nextInt(width);
+			startY = random.nextInt(height);
+			
 			//Check if it's solvable
-			solvable = isMazeSolvable(0,0);
+			solvable = isMazeSolvable(startX, startY);
 		}	
 		
 		//Randomly choose the rotating rows
@@ -163,17 +168,27 @@ public class MazeManager {
         grid[a.getCurrentY()][a.getCurrentX()].setHasAgent(true);
 	}
 	
-	//Print the maze to the console
+	// Print the maze to the console
 	public void printMazeSnapshot() {
-		 for (int i = 0; i < height; i++) {
-	            for (int j = 0; j < width; j++) {
-	                if (grid[i][j].hasAgent()) {
-	                    System.out.print("A ");
-	                } else {
-	                    System.out.print(grid[i][j] + " ");
-	                }
+	    for (int i = 0; i < height; i++) {
+	        for (int j = 0; j < width; j++) {
+	            if (i == startY && j == startX) {
+	                System.out.print("S ");
+	            } else if (grid[i][j].hasAgent()) {
+	                System.out.print("A ");
+	            } else {
+	                System.out.print(grid[i][j] + " ");
 	            }
-	            System.out.println();
 	        }
+	        System.out.println();
+	    }
+	}
+	
+	public int getStartX() {
+	    return startX;
+	}
+
+	public int getStartY() {
+	    return startY;
 	}
 }

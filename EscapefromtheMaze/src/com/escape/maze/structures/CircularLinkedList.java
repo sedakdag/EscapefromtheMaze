@@ -15,12 +15,13 @@ public class CircularLinkedList<T> {
         }
     }
 
-    //Add a new element to the end of the list
+  //Add a new element to the end of the list
     public void add(T data) {
         Node<T> node = new Node<>(data);
         if (tail == null) {
             tail = node;
-            node.next = node;
+            tail.next = tail; //Circular
+            current = tail;
         } else {
             node.next = tail.next;
             tail.next = node;
