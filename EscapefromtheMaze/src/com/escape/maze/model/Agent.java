@@ -2,6 +2,7 @@ package com.escape.maze.model;
 
 import com.escape.maze.structures.Stack;
 import com.escape.maze.manager.MazeManager;
+import com.escape.maze.model.MazeTile;
 
 public class Agent {
     private int id;
