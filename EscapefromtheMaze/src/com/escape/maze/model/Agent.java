@@ -25,28 +25,35 @@ public class Agent {
     }
 
 
-    public void move(String direction) {
+    public void move(String direction, MazeTile[][] maze, MazeManager mazeManager) {
+        if (!mazeManager.isValidMove(currentX, currentY, direction)) {
+            return;
+        }
 
-        if (direction.equals("UP")) {
-            currentY++;
-        } else if (direction.equals("DOWN")) {
+        else if (direction.toUpperCase().equals("UP")) {
             currentY--;
-        } else if (direction.equals("LEFT")) {
+        } else if (direction.toUpperCase().equals("DOWN")) {
+            currentY++;
+        } else if (direction.toUpperCase().equals("LEFT")) {
             currentX--;
-        } else if (direction.equals("RIGHT")) {
+        } else if (direction.toUpperCase().equals("RIGHT")) {
             currentX++;
         }
 
         totalMoves++;
         recordMove(currentX, currentY);
 
-        if (type == "G"){
+        MazeTile currentTile = maze[currentY][currentX];
+
+        if (currentTile.getType() == 'G'){
             hasReachedGoal = true;
         }
-        if (type == "P"){
+        if (currentTile.getType() == 'P'){
             applyPowerUp();
         }
-        // mazemanager isValidMove kontrol edilecek
+
+        mazeManager.updateAgentLocation(this, currentX, currentY);
+
     }
 
     public void backtrack() {
