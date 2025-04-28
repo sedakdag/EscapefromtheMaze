@@ -3,7 +3,7 @@ package com.escape.maze.model;
 public class MazeTile {
     private int x;
     private int y;
-    private char type; //'E' for empty,"W" for wall,"T" for trap,"P" for power up,"G" for goal
+    private char type; //'E' for empty,'W' for wall,'T' for trap,'P' for power up,'G' for goal
     private boolean hasAgent;// if true there is an agent
 
     public MazeTile(int x, int y, char type) {
