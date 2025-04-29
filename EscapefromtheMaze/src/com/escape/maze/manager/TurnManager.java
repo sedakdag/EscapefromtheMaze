@@ -89,10 +89,16 @@ public class TurnManager {
         int count = 1;
         while (!copy.isEmpty() && count <= 5) {
             String move = copy.pop();
-            System.out.printf("| %-8d | %-14s |\n", count, move);
+            String[] parts = move.split(" ");
+            String formatted = "(" + parts[0] + "," + parts[1] + ")";
+            System.out.printf("| %-8d | %-14s |\n", count, formatted);
             count++;
 
         }
+        if (agent.isHasReachedGoal()) {
+            System.out.println("🎯 Agent " + agent.getId() + " has reached the GOAL!");
+        }
+
         System.out.println("\n=============================================\n");
     }
 }
