@@ -47,7 +47,7 @@ public class Agent {
         totalMoves++;
         recordMove(currentX, currentY);
 
-        maze[previousY][previousX].setType('E');
+        maze[previousY][previousX].setHasAgent(false);
 
         MazeTile currentTile = maze[currentY][currentX];
 
