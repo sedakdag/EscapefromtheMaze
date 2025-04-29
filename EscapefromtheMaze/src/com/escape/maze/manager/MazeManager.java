@@ -57,15 +57,12 @@ public class MazeManager {
 			
 			//Check if it's solvable
 			solvable = isMazeSolvable(startX, startY);
-		}	
-		
-		//Randomly choose the rotating rows
-        rotatingRows.clear();
-        int rotatingRowCount = Math.max(1, height / 2);
-        for (int i = 0; i < rotatingRowCount; i++) {
-            int randomRow = random.nextInt(height);
-            rotatingRows.add(randomRow);
-        }
+		}
+
+		//Randomly choose only one rotating row
+		rotatingRows.clear();
+		int randomRow = random.nextInt(height);
+		rotatingRows.add(randomRow);
 	}
 	
 	//Check if the maze is solvable or not
@@ -167,28 +164,32 @@ public class MazeManager {
         }
         grid[a.getCurrentY()][a.getCurrentX()].setHasAgent(true);
 	}
-	
+
 	// Print the maze to the console
 	public void printMazeSnapshot() {
-	    for (int i = 0; i < height; i++) {
-	        for (int j = 0; j < width; j++) {
-	            if (i == startY && j == startX) {
-	                System.out.print("S ");
-	            } else if (grid[i][j].hasAgent()) {
-	                System.out.print("A ");
-	            } else {
-	                System.out.print(grid[i][j] + " ");
-	            }
-	        }
-	        System.out.println();
-	    }
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (i == startY && j == startX) {
+					System.out.print("S ");
+				} else if (grid[i][j].hasAgent()) {
+					System.out.print("A ");
+				} else {
+					System.out.print(grid[i][j].getType() + " ");
+				}
+			}
+			System.out.println();
+		}
 	}
-	
+
 	public int getStartX() {
 	    return startX;
 	}
 
 	public int getStartY() {
 	    return startY;
+	}
+
+	public MazeTile[][] getGrid() {
+		return grid;
 	}
 }
