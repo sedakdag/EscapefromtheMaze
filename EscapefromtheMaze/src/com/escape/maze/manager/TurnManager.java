@@ -47,23 +47,25 @@ public class TurnManager {
 
     // summary of ID,position ,total moves, if it as used power up , backtracks and  last 5 moves
     public void logTurnSummary(Agent agent) {
-        System.out.println("Turn:" + currentRound);
-
-        System.out.println("ID of the Agent:" + agent.getId());
+        System.out.println("\n========== Turn:" + currentRound + " ==========\n");
+        System.out.println(">> AGENT INFORMATION <<");
+        System.out.println("ID:" + agent.getId());
         System.out.println("Current Position:(" + agent.getCurrentX() + ", " + agent.getCurrentY() + ")");
         System.out.println("Total Moves: " + agent.getTotalMoves());
-        System.out.println("Power Up Active: " + agent.isHasPowerUp());
+        System.out.println("Power Up Active: " + (agent.isHasPowerUp() ? "Yes" : "No"));
         //look at the LINES AGAIN THERE MIGHT BE SOMETHING YOU HAVE FORGOTTEN
         if (agent.isHasPowerUp()) {
-            System.out.println("Agent " + agent.getId() + " used a Power Up");
+            System.out.println("Action:Agent " + agent.getId() + " used a Power-Up!");
         }
         System.out.println("Backtracks: " + agent.getBacktracks());
         if (agent.getBacktracks() > 0) {
-            System.out.println("Agent " + agent.getId() + " backtracked " + agent.getBacktracks() + " times");
+            System.out.println("Action:Agent " + agent.getId() + " backtracked " + agent.getBacktracks() + " times");
         }
 
 //i got some help while writing last 5 moves
-        System.out.println("Positions of The Last 5 Moves:");
+        System.out.println("\n>> LAST 5 MOVES <<");
+        System.out.printf("| %-8s | %-14s |\n", "Move No", "Position (x,y)");
+        System.out.println("|----------|----------------|");
 
         Stack<String> originalHistory = agent.getMoveHistory();
 
@@ -84,10 +86,13 @@ public class TurnManager {
         }
 
         // taking 5 moves from copy
-        int count = 0;
-        while (!copy.isEmpty() && count < 5) {
-            System.out.println(copy.pop());
+        int count = 1;
+        while (!copy.isEmpty() && count <= 5) {
+            String move = copy.pop();
+            System.out.printf("| %-8d | %-14s |\n", count, move);
             count++;
+
         }
+        System.out.println("\n=============================================\n");
     }
 }
