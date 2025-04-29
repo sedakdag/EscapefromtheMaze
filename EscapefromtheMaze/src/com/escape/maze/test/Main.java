@@ -23,9 +23,6 @@ public class Main {
         // simülasyonu başlat
         controller.runSimulation();
 
-        // sonuçları dosyaya yaz
-        controller.logGameSummaryToFile("game_summary.txt");
-
         System.out.println("Simulation finished. Summary written to 'game_summary.txt'.");
     }
 }

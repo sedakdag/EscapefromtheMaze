@@ -81,6 +81,8 @@ public class GameController {
 		}
 
 		printFinalStatistics();
+
+		logGameSummaryToFile("game_summary.txt");
 	}
 
 	public void processAgentAction(Agent a) {
