@@ -99,7 +99,8 @@ public class GameController {
 			checkTileEffect(a, currentTile);
 
 			if (currentTile.getType() == 'G' && !a.isHasReachedGoal()) {
-				agentsReachedGoal.add(new ReachedGoalInfo(a.getId(), turnCount + 1));
+				a.setHasReachedGoal(true);
+				agentsReachedGoal.add(new ReachedGoalInfo(a.getId(), turnCount + 1)); // listeye ekle
 				System.out.println("Agent " + a.getId() + " has reached the GOAL!");
 			}
 		} else {
@@ -126,9 +127,9 @@ public class GameController {
 
 	public void logGameSummaryToFile(String filename) {
 		try (FileWriter writer = new FileWriter(filename)) {
-			writer.write("===== SIMULATION SUMMARY =====\n");
-			writer.write(initialMazeSnapshot);
-			writer.write("\n");
+			writer.write("===== SIMULATION SUMMARY =====\n\n");
+			writer.write(initialMazeSnapshot + "\n\n");
+
 			writer.write("Total Turns: " + turnCount + "\n");
 
 			if (!agentsReachedGoal.isEmpty()) {
@@ -143,8 +144,8 @@ public class GameController {
 				ReachedGoalInfo info = agentsReachedGoal.get(i);
 				writer.write("- Agent " + info.id + " (Turn: " + info.turn + ")\n");
 			}
-			writer.write("\n");
 
+			writer.write("\n");
 			for (int i = 0; i < allAgents.size(); i++) {
 				Agent agent = allAgents.get(i);
 				writer.write("Agent " + agent.getId() + " Stats:\n");
@@ -153,8 +154,7 @@ public class GameController {
 			}
 
 			writer.write("Total Traps Triggered: " + totalTrapsTriggered + "\n\n");
-			writer.write("Last Snapshot of the Maze: \n");
-			writer.write("\n");
+			writer.write("Last Snapshot of the Maze:\n\n");
 			writer.write(maze.getSnapshotAsString());
 
 		} catch (IOException e) {

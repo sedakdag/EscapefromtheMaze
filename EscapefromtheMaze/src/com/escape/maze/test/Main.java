@@ -9,7 +9,7 @@ public class Main {
         int mazeWidth = 6;    // maze genişliği
         int mazeHeight = 6;   // maze yüksekliği
         int numAgents = 3;    // agent sayısı
-        int maxTurns = 100;   // maksimum turn sayısı
+        int maxTurns = 200;   // maksimum turn sayısı
 
         System.out.println("Initializing the Maze Simulation...");
 

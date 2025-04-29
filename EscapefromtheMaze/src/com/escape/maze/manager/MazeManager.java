@@ -12,6 +12,7 @@ public class MazeManager {
 	private MazeTile[][] grid;
 	private int width, height;
 	private int startX, startY;
+	private int goalX, goalY;
 	Random random = new Random();
 	private SinglyLinkedList<Agent> agentList;
 	private CircularLinkedList<Integer> rotatingRows;
@@ -22,6 +23,7 @@ public class MazeManager {
         this.grid = new MazeTile[height][width];
         this.agentList = new SinglyLinkedList<>();
         this.rotatingRows = new CircularLinkedList<>();
+
     }
 	
 	public void generateMaze() {
@@ -47,8 +49,8 @@ public class MazeManager {
 			}
 			
 			//Set the goal
-			int goalX = random.nextInt(width);
-			int goalY = random.nextInt(height);
+			goalX = random.nextInt(width);
+			goalY = random.nextInt(height);
 			grid[goalX][goalY].setType('G');
 			
 			//Random start point
@@ -160,9 +162,14 @@ public class MazeManager {
 	//Update the agent's location
 	public void updateAgentLocation(Agent a, int oldX, int oldY) {
 		if (oldX >= 0 && oldX < width && oldY >= 0 && oldY < height) {
-            grid[oldY][oldX].setHasAgent(false);
-        }
-        grid[a.getCurrentY()][a.getCurrentX()].setHasAgent(true);
+			grid[oldY][oldX].setHasAgent(false);
+		}
+
+		int newX = a.getCurrentX();
+		int newY = a.getCurrentY();
+		if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+			grid[newY][newX].setHasAgent(true);
+		}
 	}
 
 	// Print the maze to the console
@@ -203,4 +210,7 @@ public class MazeManager {
 		}
 		return sb.toString();
 	}
+
+	public int getGoalX() { return goalX; }
+	public int getGoalY() { return goalY; }
 }
