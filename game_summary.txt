@@ -1,2 +1,34 @@
-Total Turns: 100
-Simulation Ended.
+===== SIMULATION SUMMARY =====
+E E P E E G 
+T E E T E P 
+E E E T E E 
+S T E E T E 
+E E P E E E 
+E E P E P P 
+
+Total Turns: 72
+Winner: No agent reached the goal.
+Agents Reached Goal:
+
+Agent 1 Stats:
+Total Steps: 8
+Backtracks: 2
+
+Agent 2 Stats:
+Total Steps: 14
+Backtracks: 2
+
+Agent 3 Stats:
+Total Steps: 38
+Backtracks: 8
+
+Total Traps Triggered: 12
+
+Last Snapshot of the Maze: 
+
+E A E A E A 
+E T E A T A 
+A E E A E T 
+T E E T E E 
+E A E A E A 
+E P P E E P 

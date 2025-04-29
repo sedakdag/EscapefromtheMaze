@@ -12,6 +12,7 @@ public class MazeManager {
 	private MazeTile[][] grid;
 	private int width, height;
 	private int startX, startY;
+	Random random = new Random();
 	private SinglyLinkedList<Agent> agentList;
 	private CircularLinkedList<Integer> rotatingRows;
 	
@@ -24,7 +25,6 @@ public class MazeManager {
     }
 	
 	public void generateMaze() {
-		Random random = new Random();
 		boolean solvable = false;
 		
 		while(!solvable) {
@@ -58,23 +58,18 @@ public class MazeManager {
 			//Check if it's solvable
 			solvable = isMazeSolvable(startX, startY);
 		}
-
-		//Randomly choose only one rotating row
-		rotatingRows.clear();
-		int randomRow = random.nextInt(height);
-		rotatingRows.add(randomRow);
 	}
 	
 	//Check if the maze is solvable or not
 	public boolean isMazeSolvable(int startX, int startY) {
 		boolean[][] visited = new boolean[height][width];
 		Queue<int[]> queue = new Queue<>();
-		
+
 		 queue.enqueue(new int[] {startX, startY});
 		 visited[startY][startX] = true;
-		 
+
 		 int[][] directions = {{0,1}, {1,0}, {0,-1}, {-1,0}}; //right, down, left, up
-		 
+
 		 while (!queue.isEmpty()) {
 		        int[] current = queue.dequeue();
 		        int x = current[0];
@@ -113,9 +108,14 @@ public class MazeManager {
 	
 	//Shifts the next row in the rotatingRows list
 	public void rotateNextCorridor() {
+		//Randomly choose only one rotating row
+		int randomRow = random.nextInt(height);
+		rotatingRows.add(randomRow);
+
 	    if (!rotatingRows.isEmpty()) {
 	        int rowId = rotatingRows.getCurrent(); //current rowId
-	        rotateCorridor(rowId);
+			System.out.println("Row " + (rowId + 1) + " is rotated.\n");
+			rotateCorridor(rowId);
 	        rotatingRows.moveNext(); //go to the next rowId
 	    }
 	}
@@ -169,13 +169,7 @@ public class MazeManager {
 	public void printMazeSnapshot() {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (i == startY && j == startX) {
-					System.out.print("S ");
-				} else if (grid[i][j].hasAgent()) {
-					System.out.print("A ");
-				} else {
-					System.out.print(grid[i][j].getType() + " ");
-				}
+				System.out.print((i == startY && j == startX ? "S" : grid[i][j].toString()) + " ");
 			}
 			System.out.println();
 		}
@@ -191,5 +185,22 @@ public class MazeManager {
 
 	public MazeTile[][] getGrid() {
 		return grid;
+	}
+
+	public String getSnapshotAsString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (i == startY && j == startX && grid[i][j].hasAgent()) {
+					sb.append("S ");
+				} else if (grid[i][j].hasAgent()) {
+					sb.append("A ");
+				} else {
+					sb.append(grid[i][j].getType()).append(" ");
+				}
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 }
