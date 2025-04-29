@@ -26,6 +26,10 @@ public class Agent {
 
 
     public void move(String direction, MazeTile[][] maze, MazeManager mazeManager) {
+
+        int previousX = currentX;
+        int previousY = currentY;
+
         if (!mazeManager.isValidMove(currentX, currentY, direction)) {
             return;
         }
@@ -42,6 +46,8 @@ public class Agent {
 
         totalMoves++;
         recordMove(currentX, currentY);
+
+        maze[previousY][previousX].setType('E');
 
         MazeTile currentTile = maze[currentY][currentX];
 
