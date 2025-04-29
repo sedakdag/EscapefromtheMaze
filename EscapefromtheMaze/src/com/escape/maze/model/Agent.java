@@ -54,6 +54,10 @@ public class Agent {
         //maze[currentY][currentX].setHasAgent(true);
 
         MazeTile currentTile = maze[currentY][currentX];
+        if (currentX == mazeManager.getGoalX() && currentY == mazeManager.getGoalY()) {
+            hasReachedGoal = true;
+            System.out.println("🎯 Agent " + id + " reached the GOAL!");
+        }
 
         if (currentTile.getType() == 'G'){
             hasReachedGoal = true;
