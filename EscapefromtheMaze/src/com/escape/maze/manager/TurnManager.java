@@ -96,7 +96,7 @@ public class TurnManager {
 
         }
         if (agent.isHasReachedGoal()) {
-            System.out.println("🎯 Agent " + agent.getId() + " has reached the GOAL!");
+            System.out.println("Agent " + agent.getId() + " has reached the GOAL!");
         }
 
         System.out.println("\n=============================================\n");
