@@ -1,39 +1,28 @@
 ===== SIMULATION SUMMARY =====
 
-E E E E G E 
-E E E W E E 
-E E E E E E 
-E E E P E P 
-E W E E S P 
-E P E W E W 
+E E E 
+T E P 
+E G S 
 
 
-Total Turns: 128
-Winner: Agent 2 (First to reach the goal)
+Total Turns: 10
+Winner: Agent 1 (First to reach the goal)
 Agents Reached Goal:
-- Agent 2 (Turn: 68)
-- Agent 1 (Turn: 98)
-- Agent 3 (Turn: 128)
+- Agent 1 (Turn: 5)
+- Agent 2 (Turn: 10)
 
 Agent 1 Stats:
-Total Steps: 31
-Backtracks: 0
+Total Steps: 1
+Total Backtracks: 0
 
 Agent 2 Stats:
-Total Steps: 17
-Backtracks: 0
-
-Agent 3 Stats:
-Total Steps: 49
-Backtracks: 0
+Total Steps: 5
+Total Backtracks: 0
 
 Total Traps Triggered: 0
 
 Last Snapshot of the Maze:
 
-E A E A A E 
-E E E E A W 
-A E E A E E 
-E A E A E E 
-E A A E W E 
-W A E E W A 
+E E E 
+T E E 
+E E G 

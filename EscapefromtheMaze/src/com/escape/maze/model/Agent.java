@@ -46,20 +46,20 @@ public class Agent {
             currentX++;
         }
 
-        totalMoves++;
-        recordMove(currentX, currentY);
-
         //maze[previousY][previousX].setHasAgent(false);
 
         //maze[currentY][currentX].setHasAgent(true);
 
         MazeTile currentTile = maze[currentY][currentX];
 
-        if (currentTile.getType() == 'P'){
+        if (currentTile.getType() == 'P' && !(currentX == mazeManager.getStartX() && currentY == mazeManager.getStartY())) {
             applyPowerUp();
         }
 
         mazeManager.updateAgentLocation(this, previousX, previousY);
+
+        totalMoves++;
+        recordMove(currentX, currentY);
 
     }
 
@@ -73,8 +73,15 @@ public class Agent {
     public void applyPowerUp() {
         hasPowerUp = true;}
 
+    public void updatePositionWithRotation(int newX, int newY) {
+        if (!moveHistory.isEmpty()) {
+            moveHistory.pop(); // Eski pozisyonu sil
+        }
+        setPosition(newX, newY);
+        recordMove(newX, newY);
+    }
     public void recordMove(int x, int y) {
-        moveHistory.push(currentX + " " + currentY);
+        moveHistory.push(x + " " + y);
     }
 
     public String getMoveHistoryAsString() {
@@ -83,6 +90,11 @@ public class Agent {
 
     public void setHasReachedGoal(boolean hasReachedGoal) {
         this.hasReachedGoal = hasReachedGoal;
+    }
+
+    public void setPosition(int currentX, int currentY) {
+        this.currentX = currentX;
+        this.currentY = currentY;
     }
 
     public int getCurrentX() {

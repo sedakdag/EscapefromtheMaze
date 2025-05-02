@@ -16,7 +16,7 @@ public class MazeManager {
 	Random random = new Random();
 	private SinglyLinkedList<Agent> agentList;
 	private CircularLinkedList<Integer> rotatingRows;
-	
+
 	public MazeManager(int width, int height) {
         this.width = width;
         this.height = height;
@@ -25,10 +25,13 @@ public class MazeManager {
         this.rotatingRows = new CircularLinkedList<>();
 
     }
-	
+
+	public void addAgent(Agent agent) {
+		this.agentList.add(agent);
+	}
 	public void generateMaze() {
 		boolean solvable = false;
-		
+
 		while(!solvable) {
 			//Regenerate the maze
 			for(int i = 0; i < width; i++) {
@@ -47,21 +50,24 @@ public class MazeManager {
 					grid[i][j] = new MazeTile(j,i,type);
 				}
 			}
-			
+
 			//Set the goal
 			goalX = random.nextInt(width);
 			goalY = random.nextInt(height);
 			grid[goalX][goalY].setType('G');
-			
-			//Random start point
-			startX = random.nextInt(width);
-			startY = random.nextInt(height);
-			
+
+			//Check if the goal and the start point is same, if it's same regenerate the start point
+			do {
+				//Random start point
+				startX = random.nextInt(width);
+				startY = random.nextInt(height);
+			} while(startX == goalX && startY == goalY);
+
 			//Check if it's solvable
 			solvable = isMazeSolvable(startX, startY);
 		}
 	}
-	
+
 	//Check if the maze is solvable or not
 	public boolean isMazeSolvable(int startX, int startY) {
 		boolean[][] visited = new boolean[height][width];
@@ -100,14 +106,33 @@ public class MazeManager {
 	//Shifts a row to the right
 	public void rotateCorridor(int rowId) {
 		if (rowId < 0 || rowId >= height) return;
-		
+
+		if (startY == rowId) {
+			startX = (startX - 1 + width) % width; // Sola kaydır
+		}
+
+		//Shift the corridor
 		MazeTile first = grid[rowId][0];
-        for (int i = 0; i < width - 1; i++) {
-            grid[rowId][i] = grid[rowId][i + 1];
-        }
-        grid[rowId][width - 1] = first;
+		for (int i = 0; i < width - 1; i++) {
+			grid[rowId][i] = grid[rowId][i + 1];
+		}
+		grid[rowId][width - 1] = first;
+
+		//Update agent's locations
+		SinglyLinkedList.Node<Agent> current = agentList.getHead(); // head erişimin varsa
+
+		assert current != null;
+		while (current != null) {
+			Agent agent = current.data;
+			if (agent.getCurrentY() == rowId) {
+				int newX = (agent.getCurrentX() - 1 + width) % width; // sola kaydırma mantığı
+				agent.setPosition(newX, rowId);
+			}
+
+			current = current.next;
+		}
 	}
-	
+
 	//Shifts the next row in the rotatingRows list
 	public void rotateNextCorridor() {
 		//Randomly choose only one rotating row
@@ -116,12 +141,12 @@ public class MazeManager {
 
 	    if (!rotatingRows.isEmpty()) {
 	        int rowId = rotatingRows.getCurrent(); //current rowId
-			System.out.println("Row " + (rowId + 1) + " is rotated.\n");
+			System.out.println("Row " + (rowId) + " is rotated.\n");
 			rotateCorridor(rowId);
 	        rotatingRows.moveNext(); //go to the next rowId
 	    }
 	}
-	
+
 	//Check if a move is valid or not
 	public boolean isValidMove(int fromX, int fromY, String direction) {
 		int newX = fromX;
@@ -143,14 +168,14 @@ public class MazeManager {
             default:
                 return false;
         }
-        
+
         if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
             return false;
         }
         MazeTile tile = grid[newY][newX];
         return tile.isTraversable();
 	}
-	
+
 	//Give the tile in a given coordinate
 	public MazeTile getTile(int x, int y) {
 		if (x >= 0 && x < width && y >= 0 && y < height) {
@@ -158,7 +183,7 @@ public class MazeManager {
         }
         return null;
 	}
-	
+
 	//Update the agent's location
 	public void updateAgentLocation(Agent a, int oldX, int oldY) {
 		if (oldX >= 0 && oldX < width && oldY >= 0 && oldY < height) {
@@ -176,7 +201,12 @@ public class MazeManager {
 	public void printMazeSnapshot() {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				System.out.print((i == startY && j == startX ? "S" : grid[i][j].toString()) + " ");
+
+				if(i == startY && j == startX) {
+					System.out.print("S ");
+				} else {
+					System.out.print(grid[i][j].toString() + " ");
+				}
 			}
 			System.out.println();
 		}

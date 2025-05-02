@@ -3,11 +3,11 @@ package com.escape.maze.structures;
 public class SinglyLinkedList<T> {
 
 
-    private static class Node<T> {
-        T data;
-        Node<T> next;
+    public static class Node<T> {
+        public T data;
+        public Node<T> next;
 
-        Node(T data) {
+        public Node(T data) {
 
             this.data = data;
         }
@@ -74,8 +74,11 @@ public class SinglyLinkedList<T> {
             current = current.next;
         return current.data;
     }
-    
-    
+
+    public Node<T> getHead() {
+        return head;
+    }
+
     //Return the number of elements in the list
     public int size() {
         return size;

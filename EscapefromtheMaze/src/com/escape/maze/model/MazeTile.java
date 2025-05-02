@@ -28,6 +28,7 @@ public class MazeTile {
     public int getY() { return y; }
     public char getType() { return type; }
     public boolean hasAgent() { return hasAgent; }
+
     //set methods(change)
     public void setType(char type) { this.type = type; }
     public void setHasAgent(boolean hasAgent) { this.hasAgent = hasAgent; }

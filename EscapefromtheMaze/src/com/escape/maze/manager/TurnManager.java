@@ -47,7 +47,7 @@ public class TurnManager {
 
     // summary of ID,position ,total moves, if it as used power up , backtracks and  last 5 moves
     public void logTurnSummary(Agent agent) {
-        System.out.println("\n========== Turn:" + currentRound + " ==========\n");
+        System.out.println("========== Turn:" + currentRound + " ==========\n");
         System.out.println(">> AGENT INFORMATION <<");
         System.out.println("ID:" + agent.getId());
         System.out.println("Current Position:(" + agent.getCurrentX() + ", " + agent.getCurrentY() + ")");
@@ -55,11 +55,11 @@ public class TurnManager {
         System.out.println("Power Up Active: " + (agent.isHasPowerUp() ? "Yes" : "No"));
         //look at the LINES AGAIN THERE MIGHT BE SOMETHING YOU HAVE FORGOTTEN
         if (agent.isHasPowerUp()) {
-            System.out.println("Action:Agent " + agent.getId() + " used a Power-Up!");
+            System.out.println("Agent " + agent.getId() + " has a Power-Up!");
         }
-        System.out.println("Backtracks: " + agent.getBacktracks());
+        System.out.println("Total Backtracks: " + agent.getBacktracks());
         if (agent.getBacktracks() > 0) {
-            System.out.println("Action:Agent " + agent.getId() + " backtracked " + agent.getBacktracks() + " times");
+            System.out.println("Agent " + agent.getId() + " backtracked " + agent.getBacktracks() + " times in total.");
         }
 
 //i got some help while writing last 5 moves
@@ -96,7 +96,7 @@ public class TurnManager {
 
         }
         if (agent.isHasReachedGoal()) {
-            System.out.println("Agent " + agent.getId() + " has reached the GOAL!");
+            System.out.println("\nAgent " + agent.getId() + " has reached the GOAL!");
         }
 
         System.out.println("\n=============================================\n");

@@ -6,9 +6,9 @@ import com.escape.maze.manager.TurnManager;
 
 public class Main {
     public static void main(String[] args) {
-        int mazeWidth = 6;    // maze genişliği
-        int mazeHeight = 6;   // maze yüksekliği
-        int numAgents = 3;    // agent sayısı
+        int mazeWidth = 3;    // maze genişliği
+        int mazeHeight = 3;           ;   // maze yüksekliği
+        int numAgents = 2;    // agent sayısı
         int maxTurns = 200;   // maksimum turn sayısı
 
         System.out.println("Initializing the Maze Simulation...");

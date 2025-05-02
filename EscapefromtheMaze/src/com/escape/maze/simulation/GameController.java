@@ -51,6 +51,7 @@ public class GameController {
 
 			Agent agent = new Agent(i + 1, startX, startY, new Stack<>(), false, 0, 0, false);
 			turns.add(agent);
+			maze.addAgent(agent);
 			maze.updateAgentLocation(agent, startX, startY);
 			allAgents.add(agent);
 		}
@@ -67,7 +68,7 @@ public class GameController {
 
 			maze.rotateNextCorridor();
 			maze.printMazeSnapshot();
-			System.out.println("\n");
+			System.out.println();
 
 			Agent currentAgent = turns.getCurrentAgent();
 			if (currentAgent != null && !currentAgent.isHasReachedGoal()) {
@@ -102,11 +103,10 @@ public class GameController {
 
 			if (currentTile.getType() == 'G' && !a.isHasReachedGoal()) {
 				a.setHasReachedGoal(true);
-				agentsReachedGoal.add(new ReachedGoalInfo(a.getId(), turnCount + 1)); // listeye ekle
+				agentsReachedGoal.add(new ReachedGoalInfo(a.getId(), turnCount + 1));
 				System.out.println("Agent " + a.getId() + " has reached the GOAL!");
+				currentTile.setHasAgent(false);
 			}
-		} else {
-			System.out.println("Invalid move. Agent " + a.getId() + " stays at (" + oldX + ", " + oldY + ")");
 		}
 	}
 
@@ -152,7 +152,7 @@ public class GameController {
 				Agent agent = allAgents.get(i);
 				writer.write("Agent " + agent.getId() + " Stats:\n");
 				writer.write("Total Steps: " + agent.getTotalMoves() + "\n");
-				writer.write("Backtracks: " + agent.getBacktracks() + "\n\n");
+				writer.write("Total Backtracks: " + agent.getBacktracks() + "\n\n");
 			}
 
 			writer.write("Total Traps Triggered: " + totalTrapsTriggered + "\n\n");
