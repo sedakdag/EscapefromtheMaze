@@ -113,7 +113,7 @@ public class GameController {
 	private void checkTileEffect(Agent a, MazeTile tile) {
 		if (tile.getType() == 'T') {
 			System.out.println("Agent " + a.getId() + " stepped on a trap and must backtrack!");
-			a.backtrack();
+			a.backtrack(maze);
 			totalTrapsTriggered++;
 		} else if (tile.getType() == 'P') {
 			System.out.println("Agent " + a.getId() + " collected a power-up!");
