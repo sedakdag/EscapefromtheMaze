@@ -34,7 +34,7 @@ public class Agent {
             return;
         }
 
-        // Hareketi gerçekleştir
+
         if (direction.toUpperCase().equals("UP")) {
             currentY--;
         } else if (direction.toUpperCase().equals("DOWN")) {
@@ -47,25 +47,21 @@ public class Agent {
 
         MazeTile currentTile = maze[currentY][currentX];
 
-        // Eğer yeni konum T ise backtrack yap ve işlemi sonlandır
+
         if (currentTile.getType() == 'T') {
-            // Önce eski konuma geri dön
-            //System.out.println("Agent " + "ajan" + " stepped on a trap and must backtrack!");
-            //currentX = previousX;
-            //currentY = previousY;
-            //backtrack(mazeManager);
+            mazeManager.updateAgentLocation(this, previousX, previousY);
             return;
         }
 
-        // Eğer P (PowerUp) ise ve başlangıç noktası değilse power-up uygula
+
         if (currentTile.getType() == 'P' && !(currentX == mazeManager.getStartX() && currentY == mazeManager.getStartY())) {
             applyPowerUp();
         }
 
-        // Konumu güncelle
+
         mazeManager.updateAgentLocation(this, previousX, previousY);
         totalMoves++;
-        recordMove(previousX, previousY); // Eski konumu kaydet
+        recordMove(previousX, previousY);
     }
 
     public void backtrack(MazeManager mazeManager) {

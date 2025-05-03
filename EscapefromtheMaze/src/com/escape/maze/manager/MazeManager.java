@@ -186,16 +186,14 @@ public class MazeManager {
 
 	//Update the agent's location
 	public void updateAgentLocation(Agent a, int oldX, int oldY) {
-		// Eski konumu temizle (A'yı kaldır)
+
 		if (oldX >= 0 && oldX < width && oldY >= 0 && oldY < height) {
 			grid[oldY][oldX].setHasAgent(false);
 		}
 
-		// Yeni konumu işaretle (A'yı koy)
 		int newX = a.getCurrentX();
 		int newY = a.getCurrentY();
-
-		// Eğer yeni konum T ise A'yı koyma
+		
 		if (newX >= 0 && newX < width && newY >= 0 && newY < height
 				&& grid[newY][newX].getType() != 'T') {
 			grid[newY][newX].setHasAgent(true);
