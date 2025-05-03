@@ -1,20 +1,19 @@
 package com.escape.maze.model;
 
 import java.util.Random;
-import com.escape.maze.structures.Stack;
+import com.escape.maze.structures.AgentStack;
 import com.escape.maze.manager.MazeManager;
-import com.escape.maze.model.MazeTile;
 
 public class Agent {
     private int id;
     private int currentX, currentY;
-    private Stack<String> moveHistory;
+    private AgentStack<String> moveHistory;
     private boolean hasReachedGoal;
     private int totalMoves;
     private int backtracks;
     private boolean hasPowerUp;
 
-    public Agent(int id, int currentX, int currentY, Stack<String> moveHistory, boolean hasReachedGoal, int totalMoves, int backtracks, boolean hasPowerUp) {
+    public Agent(int id, int currentX, int currentY, AgentStack<String> moveHistory, boolean hasReachedGoal, int totalMoves, int backtracks, boolean hasPowerUp) {
         this.id = id;
         this.currentX = currentX;
         this.currentY = currentY;
@@ -80,7 +79,7 @@ public class Agent {
             pops--;
         }
 
-        // Konumu güncelle (eski konumu temizle, yeni konumu işaretle)
+        //Update the position (clear the old position, mark the new one)
         mazeManager.updateAgentLocation(this, oldX, oldY);
     }
 
@@ -89,7 +88,7 @@ public class Agent {
 
     public void updatePositionWithRotation(int newX, int newY) {
         if (!moveHistory.isEmpty()) {
-            moveHistory.pop(); // Eski pozisyonu sil
+            moveHistory.pop(); //Remove the old position
         }
         setPosition(newX, newY);
         recordMove(newX, newY);
@@ -133,7 +132,7 @@ public class Agent {
         return hasReachedGoal;
     }
 
-    public Stack<String> getMoveHistory() {
+    public AgentStack<String> getMoveHistory() {
         return moveHistory;
     }
 }

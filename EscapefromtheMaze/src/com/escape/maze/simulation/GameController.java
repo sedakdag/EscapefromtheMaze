@@ -1,6 +1,6 @@
 package com.escape.maze.simulation;
 
-import com.escape.maze.structures.Stack;
+import com.escape.maze.structures.AgentStack;
 import com.escape.maze.structures.SinglyLinkedList;
 import com.escape.maze.manager.MazeManager;
 import com.escape.maze.manager.TurnManager;
@@ -49,7 +49,7 @@ public class GameController {
 			int startX = maze.getStartX();
 			int startY = maze.getStartY();
 
-			Agent agent = new Agent(i + 1, startX, startY, new Stack<>(), false, 0, 0, false);
+			Agent agent = new Agent(i + 1, startX, startY, new AgentStack<>(), false, 0, 0, false);
 			turns.add(agent);
 			maze.addAgent(agent);
 			maze.updateAgentLocation(agent, startX, startY);

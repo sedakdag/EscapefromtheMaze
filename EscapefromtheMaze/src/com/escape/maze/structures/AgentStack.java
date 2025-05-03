@@ -2,7 +2,7 @@ package com.escape.maze.structures;
 
 
 
-public class Stack<T> {
+public class AgentStack<T> {
 
     private Node<T> top;
     private int size;

@@ -1,32 +1,32 @@
 package com.escape.maze.manager;
-import com.escape.maze.structures.Queue;
+import com.escape.maze.structures.TurnQueue;
 import com.escape.maze.model.Agent;
-import com.escape.maze.structures.Stack;
+import com.escape.maze.structures.AgentStack;
 
 public class TurnManager {
-    private Queue<Agent> agentQueue;
+    private TurnQueue<Agent> agentTurnQueue;
     private int currentRound;
-    private Queue<int[]> previousPositions;
+    private TurnQueue<int[]> previousPositions;
 
     public TurnManager() {
-        this.agentQueue = new Queue<>();
-        this.previousPositions = new Queue<>();
+        this.agentTurnQueue = new TurnQueue<>();
+        this.previousPositions = new TurnQueue<>();
         this.currentRound = 0;
 
     }
 
     public void add(Agent agent) {
-        agentQueue.enqueue(agent);
+        agentTurnQueue.enqueue(agent);
         previousPositions.enqueue(new int[]{agent.getCurrentX(), agent.getCurrentY()});
     }
 
     public void advanceTurn() {
-        if (agentQueue.isEmpty()) {
+        if (agentTurnQueue.isEmpty()) {
             return;
         }
-        Agent agent = agentQueue.dequeue();
+        Agent agent = agentTurnQueue.dequeue();
         int[] prevPos = previousPositions.dequeue();
-        boolean reachedGoal = agent.isHasReachedGoal();//i added a temporary reachedgoal, it impoted hasreachedgoal from agent
+        boolean reachedGoal = agent.isHasReachedGoal();
 
         if (prevPos[0] != agent.getCurrentX() || prevPos[1] != agent.getCurrentY()) {
             System.out.printf("Agent %d moved from %d,%d to %d,%d%n",
@@ -35,7 +35,7 @@ public class TurnManager {
         }
 
         if (!reachedGoal) {
-            agentQueue.enqueue(agent);
+            agentTurnQueue.enqueue(agent);
             previousPositions.enqueue(new int[]{agent.getCurrentX(), agent.getCurrentY()});
         }
         currentRound++;
@@ -43,21 +43,21 @@ public class TurnManager {
     }
 
     public Agent getCurrentAgent() {
-        if (agentQueue.isEmpty()) {
+        if (agentTurnQueue.isEmpty()) {
             return null;
         }
-        return agentQueue.peek();
+        return agentTurnQueue.peek();
     }
 
     public boolean allAgentsFinished() {
-        return agentQueue.isEmpty();
+        return agentTurnQueue.isEmpty();
     }
 
-    public Queue<Agent> getAgentQueue() {
-        return agentQueue;
+    public TurnQueue<Agent> getAgentQueue() {
+        return agentTurnQueue;
     }
 
-    // summary of ID,position ,total moves, if it as used power up , backtracks and  last 5 moves
+    //Print summary of ID, position, total moves, if it as used power up, total backtracks and last 5 moves
     public void logTurnSummary(Agent agent) {
         System.out.println("========== Turn:" + currentRound + " ==========\n");
         System.out.println(">> AGENT INFORMATION <<");
@@ -74,17 +74,17 @@ public class TurnManager {
             System.out.println("Agent " + agent.getId() + " backtracked " + agent.getBacktracks() + " times in total.");
         }
 
-//i got some help while writing last 5 moves
+        //Print last 5 moves
         System.out.println("\n>> LAST 5 MOVES <<");
         System.out.printf("| %-8s | %-14s |\n", "Move No", "Position (x,y)");
         System.out.println("|----------|----------------|");
 
-        Stack<String> originalHistory = agent.getMoveHistory();
+        AgentStack<String> originalHistory = agent.getMoveHistory();
 
 
-        // a temp copy stack for moveHistory
-        Stack<String> copy = new Stack<>();
-        Stack<String> temp = new Stack<>();
+        //A temporary copy stack for moveHistory
+        AgentStack<String> copy = new AgentStack<>();
+        AgentStack<String> temp = new AgentStack<>();
 
         while (!originalHistory.isEmpty()) {
             String move = originalHistory.pop();
@@ -92,12 +92,12 @@ public class TurnManager {
             temp.push(move);
         }
 
-        // turning moveHistory back to normal
+        //Turn moveHistory back to normal
         while (!temp.isEmpty()) {
             originalHistory.push(temp.pop());
         }
 
-        // taking 5 moves from copy
+        //Take 5 moves from copy
         int count = 1;
         while (!copy.isEmpty() && count <= 5) {
             String move = copy.pop();

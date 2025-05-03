@@ -1,8 +1,8 @@
 package com.escape.maze.manager;
 
 import com.escape.maze.structures.SinglyLinkedList;
-import com.escape.maze.structures.CircularLinkedList;
-import com.escape.maze.structures.Queue;
+import com.escape.maze.structures.CircularCorridor;
+import com.escape.maze.structures.TurnQueue;
 import com.escape.maze.model.MazeTile;
 import com.escape.maze.model.Agent;
 
@@ -15,20 +15,21 @@ public class MazeManager {
 	private int goalX, goalY;
 	Random random = new Random();
 	private SinglyLinkedList<Agent> agentList;
-	private CircularLinkedList<Integer> rotatingRows;
+	private CircularCorridor<Integer> rotatingRows;
 
 	public MazeManager(int width, int height) {
         this.width = width;
         this.height = height;
         this.grid = new MazeTile[height][width];
         this.agentList = new SinglyLinkedList<>();
-        this.rotatingRows = new CircularLinkedList<>();
+        this.rotatingRows = new CircularCorridor<>();
 
     }
 
 	public void addAgent(Agent agent) {
 		this.agentList.add(agent);
 	}
+
 	public void generateMaze() {
 		boolean solvable = false;
 
@@ -71,15 +72,15 @@ public class MazeManager {
 	//Check if the maze is solvable or not
 	public boolean isMazeSolvable(int startX, int startY) {
 		boolean[][] visited = new boolean[height][width];
-		Queue<int[]> queue = new Queue<>();
+		TurnQueue<int[]> turnQueue = new TurnQueue<>();
 
-		 queue.enqueue(new int[] {startX, startY});
+		 turnQueue.enqueue(new int[] {startX, startY});
 		 visited[startY][startX] = true;
 
 		 int[][] directions = {{0,1}, {1,0}, {0,-1}, {-1,0}}; //right, down, left, up
 
-		 while (!queue.isEmpty()) {
-		        int[] current = queue.dequeue();
+		 while (!turnQueue.isEmpty()) {
+		        int[] current = turnQueue.dequeue();
 		        int x = current[0];
 		        int y = current[1];
 
@@ -94,7 +95,7 @@ public class MazeManager {
 		            if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
 		                if (!visited[newY][newX] && grid[newY][newX].isTraversable()) {
 		                    visited[newY][newX] = true;
-		                    queue.enqueue(new int[]{newX, newY});
+		                    turnQueue.enqueue(new int[]{newX, newY});
 		                }
 		            }
 		        }
@@ -103,12 +104,12 @@ public class MazeManager {
 
 	}
 
-	//Shifts a row to the right
+	//Shift all tiles in a row circularly
 	public void rotateCorridor(int rowId) {
 		if (rowId < 0 || rowId >= height) return;
 
 		if (startY == rowId) {
-			startX = (startX - 1 + width) % width; // Sola kaydır
+			startX = (startX - 1 + width) % width;
 		}
 
 		//Shift the corridor
@@ -119,13 +120,13 @@ public class MazeManager {
 		grid[rowId][width - 1] = first;
 
 		//Update agent's locations
-		SinglyLinkedList.Node<Agent> current = agentList.getHead(); // head erişimin varsa
+		SinglyLinkedList.Node<Agent> current = agentList.getHead();
 
 		assert current != null;
 		while (current != null) {
 			Agent agent = current.data;
 			if (agent.getCurrentY() == rowId) {
-				int newX = (agent.getCurrentX() - 1 + width) % width; // sola kaydırma mantığı
+				int newX = (agent.getCurrentX() - 1 + width) % width;
 				agent.setPosition(newX, rowId);
 			}
 
@@ -243,7 +244,4 @@ public class MazeManager {
 		}
 		return sb.toString();
 	}
-
-	public int getGoalX() { return goalX; }
-	public int getGoalY() { return goalY; }
 }

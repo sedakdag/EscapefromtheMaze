@@ -1,6 +1,6 @@
 package com.escape.maze.structures;
 
-public class CircularLinkedList<T> {
+public class CircularCorridor<T> {
     private Node<T> tail;
     private Node<T> current;
     private int size;

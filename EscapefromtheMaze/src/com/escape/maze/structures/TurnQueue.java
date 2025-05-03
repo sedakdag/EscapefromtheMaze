@@ -1,6 +1,6 @@
 package com.escape.maze.structures;
 
-public class Queue<T> {
+public class TurnQueue<T> {
     private Node<T> front, rear;
     private int size;
 
