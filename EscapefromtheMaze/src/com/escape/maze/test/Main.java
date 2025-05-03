@@ -6,8 +6,8 @@ import com.escape.maze.manager.TurnManager;
 
 public class Main {
     public static void main(String[] args) {
-        int mazeWidth = 3;    // maze genişliği
-        int mazeHeight = 3;           ;   // maze yüksekliği
+        int mazeWidth = 4;    // maze genişliği
+        int mazeHeight = 4;           ;   // maze yüksekliği
         int numAgents = 2;    // agent sayısı
         int maxTurns = 200;   // maksimum turn sayısı
 

@@ -1,5 +1,6 @@
 package com.escape.maze.model;
 
+import java.util.Random;
 import com.escape.maze.structures.Stack;
 import com.escape.maze.manager.MazeManager;
 import com.escape.maze.model.MazeTile;
@@ -26,17 +27,15 @@ public class Agent {
 
 
     public void move(String direction, MazeTile[][] maze, MazeManager mazeManager) {
-
-
         int previousX = currentX;
         int previousY = currentY;
-
 
         if (!mazeManager.isValidMove(currentX, currentY, direction)) {
             return;
         }
 
-        else if (direction.toUpperCase().equals("UP")) {
+        // Hareketi gerçekleştir
+        if (direction.toUpperCase().equals("UP")) {
             currentY--;
         } else if (direction.toUpperCase().equals("DOWN")) {
             currentY++;
@@ -46,28 +45,47 @@ public class Agent {
             currentX++;
         }
 
-        //maze[previousY][previousX].setHasAgent(false);
-
-        //maze[currentY][currentX].setHasAgent(true);
-
         MazeTile currentTile = maze[currentY][currentX];
 
+        // Eğer yeni konum T ise backtrack yap ve işlemi sonlandır
+        if (currentTile.getType() == 'T') {
+            // Önce eski konuma geri dön
+            //System.out.println("Agent " + "ajan" + " stepped on a trap and must backtrack!");
+            //currentX = previousX;
+            //currentY = previousY;
+            //backtrack(mazeManager);
+            return;
+        }
+
+        // Eğer P (PowerUp) ise ve başlangıç noktası değilse power-up uygula
         if (currentTile.getType() == 'P' && !(currentX == mazeManager.getStartX() && currentY == mazeManager.getStartY())) {
             applyPowerUp();
         }
 
+        // Konumu güncelle
         mazeManager.updateAgentLocation(this, previousX, previousY);
-
         totalMoves++;
-        recordMove(currentX, currentY);
-
+        recordMove(previousX, previousY); // Eski konumu kaydet
     }
 
-    public void backtrack() {
-        if(moveHistory.isEmpty() == false) {
-            moveHistory.pop();
+    public void backtrack(MazeManager mazeManager) {
+        Random random = new Random();
+        int pops = random.nextInt(2) + 1; // 1 or 2 pop
+
+        int oldX = currentX;
+        int oldY = currentY;
+
+        while (!moveHistory.isEmpty() && pops > 0) {
+            String lastMove = moveHistory.pop();
+            String[] coords = lastMove.split(" ");
+            currentX = Integer.parseInt(coords[0]);
+            currentY = Integer.parseInt(coords[1]);
             backtracks++;
+            pops--;
         }
+
+        // Konumu güncelle (eski konumu temizle, yeni konumu işaretle)
+        mazeManager.updateAgentLocation(this, oldX, oldY);
     }
 
     public void applyPowerUp() {

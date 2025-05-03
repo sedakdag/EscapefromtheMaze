@@ -89,6 +89,8 @@ public class GameController {
 	public void processAgentAction(Agent a) {
 		String[] directions = {"UP", "DOWN", "LEFT", "RIGHT"};
 		String direction = directions[rand.nextInt(directions.length)];
+		System.out.printf("Agent %d attempting to move %s from %d,%d%n", a.getId(), direction, a.getCurrentX(), a.getCurrentY());
+
 
 		int oldX = a.getCurrentX();
 		int oldY = a.getCurrentY();
@@ -107,13 +109,16 @@ public class GameController {
 				System.out.println("Agent " + a.getId() + " has reached the GOAL!");
 				currentTile.setHasAgent(false);
 			}
+		} else {
+			System.out.printf("Agent %d couldn't move %s (invalid move)%n",
+					a.getId(), direction);
 		}
 	}
 
 	private void checkTileEffect(Agent a, MazeTile tile) {
 		if (tile.getType() == 'T') {
 			System.out.println("Agent " + a.getId() + " stepped on a trap and must backtrack!");
-			a.backtrack();
+			a.backtrack(maze);
 			totalTrapsTriggered++;
 		} else if (tile.getType() == 'P') {
 			System.out.println("Agent " + a.getId() + " collected a power-up!");

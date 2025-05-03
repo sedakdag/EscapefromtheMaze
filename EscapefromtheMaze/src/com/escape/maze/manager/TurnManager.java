@@ -6,14 +6,18 @@ import com.escape.maze.structures.Stack;
 public class TurnManager {
     private Queue<Agent> agentQueue;
     private int currentRound;
+    private Queue<int[]> previousPositions;
 
     public TurnManager() {
-        agentQueue = new Queue<>();
-        currentRound = 0;
+        this.agentQueue = new Queue<>();
+        this.previousPositions = new Queue<>();
+        this.currentRound = 0;
+
     }
 
     public void add(Agent agent) {
         agentQueue.enqueue(agent);
+        previousPositions.enqueue(new int[]{agent.getCurrentX(), agent.getCurrentY()});
     }
 
     public void advanceTurn() {
@@ -21,10 +25,18 @@ public class TurnManager {
             return;
         }
         Agent agent = agentQueue.dequeue();
+        int[] prevPos = previousPositions.dequeue();
         boolean reachedGoal = agent.isHasReachedGoal();//i added a temporary reachedgoal, it impoted hasreachedgoal from agent
+
+        if (prevPos[0] != agent.getCurrentX() || prevPos[1] != agent.getCurrentY()) {
+            System.out.printf("Agent %d moved from %d,%d to %d,%d%n",
+                    agent.getId(), prevPos[0], prevPos[1],
+                    agent.getCurrentX(), agent.getCurrentY());
+        }
 
         if (!reachedGoal) {
             agentQueue.enqueue(agent);
+            previousPositions.enqueue(new int[]{agent.getCurrentX(), agent.getCurrentY()});
         }
         currentRound++;
 
@@ -101,4 +113,5 @@ public class TurnManager {
 
         System.out.println("\n=============================================\n");
     }
+
 }
