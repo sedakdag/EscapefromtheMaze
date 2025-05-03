@@ -48,7 +48,8 @@
 
 ###  _✫ ✬ ✭ What is Our Project About?_ 
 
-This Java project is a **multi-agent, turn-based maze simulation**. The goal is to help each agent reach the goal tile in a randomly generated maze filled with traps, walls, power-ups, and rotating corridors.
+This Java project is a **multi-agent, turn-based and somewhat interactable maze simulation** that gets the information about  **_the width and the height of the maze, number of agents and how many turns there will be executed from the user!_**        
+The goal is to help each agent reach the goal tile in a randomly generated maze filled with traps, walls, power-ups, and rotating corridors.
 
 This Project was mainly made by using the data structures that was given to us in our course `CENG202 – Data Structures` which are **Stacks, Queues, Linked Lists, etc.**
 
@@ -195,7 +196,7 @@ while(!turnManager.allAgentsFinished()) {
 ---
 ###  [◉¯] .𖥔 ݁ ˖ Maze Snapshot 
 
-- With the help of the user (by getting inputs such as the width and height of the maze) we can upload a snapshot of the maze!
+- With the help of the user _(by getting inputs such as the width and height of the maze, number of agents and how many turns there will be)_ we can upload a snapshot of the maze!
 ```
 E T E W G
 P E W T E
