@@ -12,11 +12,9 @@ public class Main {
 
         System.out.println("Welcome to the Maze!");
 
-        System.out.println("Please enter the maze's width: ");
+        System.out.println("Please enter the maze's width and height: ");
         int mazeWidth = scanner.nextInt();
-
-        System.out.println("Please enter the maze's height: ");
-        int mazeHeight = scanner.nextInt();
+        int mazeHeight = mazeWidth;
 
         System.out.println("Please enter the number of agents: ");
         int numAgents = scanner.nextInt();
