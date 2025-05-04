@@ -74,8 +74,15 @@ This Project was mainly made by using the data structures that was given to us i
 ### _To compile and run in terminal:_
 
 ```bash
-javac com/escape/maze/**/*.java
-java com.escape.maze.Main
+# 1.compile
+find src -name "*.java" > sources.txt
+mkdir -p out
+javac -d out @sources.txt
+
+# 2.run
+java -cp out com.escape.maze.test.Main
+
+
 ```
 
 
